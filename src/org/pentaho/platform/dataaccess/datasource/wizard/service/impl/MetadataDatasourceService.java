@@ -89,18 +89,48 @@ public class MetadataDatasourceService {
 
 	
   /**
+   * Imports metadata datasource with given id<br/>
+   * A convenience method stubs out to the importMetadataDatasource method so that imports can be called from
+   * a http form which requires a post.
+   * 
    * @param domainId  Unique identifier for the metadata datasource
    * @param metadataFile Input stream for the metadata.xmi
    * @param metadataFileInfo User selected name for the file
    * @param localeFiles List of local files
    * @param localeFilesInfo List of information for each local file
    *
+   * <p> Endpoint address is: <b> http://[host]:[port]/[webapp]/plugin/data-access/api/metadata/postimport </b><br/> 
+   * You should be logged in to the system and have RepositoryReadAction, RepositoryCreateAction, AdministerSecurityAction or PublishAction privileges in order to use the method.</p>
+   * Method usage:
+   * <pre>
+   * <code>
+   * final String baseUrl = "http://[host]:[port]/[webapp]/";
+   * Client client = Client.create( new DefaultClientConfig() );
+   * client.addFilter( new HTTPBasicAuthFilter( "[user]", "[password]" ) );
+   * WebResource resource = client.resource( baseUrl + "plugin/data-access/api/metadata/postimport");
+   * String domainId = "steel-wheels";
+   * File metadataDatasourceFile = new File( "metadata.xmi" );
+   * FileInputStream metadataDatasourceInputStream = null;
+   * try {
+   * 	metadataDatasourceInputStream = new FileInputStream( "C:\\" + metadataDatasourceFile );
+   * }
+   * catch (FileNotFoundException e) {}
+   * FormDataMultiPart part = new FormDataMultiPart();
+   * part.field( "overwrite", "true", MediaType.MULTIPART_FORM_DATA_TYPE );
+   * part.field( "domainId", domainId, MediaType.MULTIPART_FORM_DATA_TYPE ).field( "metadataFile",
+   * 		metadataDatasourceInputStream, MediaType.MULTIPART_FORM_DATA_TYPE );
+   * part.getField( "metadataFile" ).setContentDisposition(
+   * 		FormDataContentDisposition.name( "metadataFile" ).fileName( metadataDatasourceFile.getName() ).build() );
+   * ClientResponse response = resource.type( MediaType.MULTIPART_FORM_DATA ).post( ClientResponse.class, part );
+   * if ( response != null ) {
+   * 	String message = response.getEntity( String.class );
+   * }
+   * </code>
+   * </pre>
+   *
    * @return Response containing the success of the method
    *
-   * @throws PentahoAccessControlException Thrown when validation of access fails
-   * 
-   * A convenience method stubs out to the importMetadataDatasource method so that imports can be called from
-   * a http form which requires a post.
+   * @throws PentahoAccessControlException Thrown when validation of access fails<br/>
    */
   @POST
   @Path("/postimport")
@@ -129,6 +159,35 @@ public class MetadataDatasourceService {
    * @param localeFiles List of local files
    * @param localeFilesInfo List of information for each local file
    * @param overwrite Flag for overwriting existing version of the file
+   *
+   * <p> Endpoint address is: <b> http://[host]:[port]/[webapp]/plugin/data-access/api/metadata/import </b><br/> 
+   * You should be logged in to the system and have RepositoryReadAction, RepositoryCreateAction, AdministerSecurityAction or PublishAction privileges in order to use the method.</p>
+   * Method usage:
+   * <pre>
+   * <code>
+   * final String baseUrl = "http://[host]:[port]/[webapp]/";
+   * Client client = Client.create( new DefaultClientConfig() );
+   * client.addFilter( new HTTPBasicAuthFilter( "[user]", "[password]" ) );
+   * WebResource resource = client.resource( baseUrl + "plugin/data-access/api/metadata/import");
+   * String domainId = "steel-wheels";
+   * File metadataDatasourceFile = new File( "metadata.xmi" );
+   * FileInputStream metadataDatasourceInputStream = null;
+   * try {
+   * 	metadataDatasourceInputStream = new FileInputStream( "C:\\" + metadataDatasourceFile );
+   * }
+   * catch (FileNotFoundException e) {}
+   * FormDataMultiPart part = new FormDataMultiPart();
+   * part.field( "overwrite", "true", MediaType.MULTIPART_FORM_DATA_TYPE );
+   * part.field( "domainId", domainId, MediaType.MULTIPART_FORM_DATA_TYPE ).field( "metadataFile",
+   * 		metadataDatasourceInputStream, MediaType.MULTIPART_FORM_DATA_TYPE );
+   * part.getField( "metadataFile" ).setContentDisposition(
+   * 		FormDataContentDisposition.name( "metadataFile" ).fileName( metadataDatasourceFile.getName() ).build() );
+   * ClientResponse response = resource.type( MediaType.MULTIPART_FORM_DATA ).put( ClientResponse.class, part );
+   * if ( response != null ) {
+   * 	int status = response.getStatus();//will be equals MetadataDatasourceService.SUCCESS if it's ok
+   * }
+   * </code>
+   * </pre>
    *
    * @return Response containing the success of the method
    *
@@ -210,9 +269,6 @@ public class MetadataDatasourceService {
       logger.error(e);
 			return Response.serverError().entity(Messages.getString("MetadataDatasourceService.ERROR_001_METADATA_DATASOURCE_ERROR")).build();
 		}
-
-
-
 	}
 
   /**

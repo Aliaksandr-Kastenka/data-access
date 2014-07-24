@@ -95,6 +95,36 @@ public class DatasourceResource {
   /**
    * Get list of IDs of analysis datasource
    *
+   * <p> Endpoint address is: <b> http://[host]:[port]/[webapp]/plugin/data-access/api/datasource/analysis/ids </b><br/>
+   * You should be logged in to the system in order to use the method.</p>
+   * Response content is json or xml based on request "accept" header("application/json" or "application/xml").<br/>
+   * Response example:
+   * <pre>
+   * {@code
+   * <List>
+   * <Item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">SampleData</Item>
+   * <Item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">SteelWheels</Item>
+   * <Item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">pentaho_operations_mart</Item>
+   * </List>
+   * }
+   * </pre>
+   * Method usage(Jersey):
+   * <pre>
+   * <code> 
+   * final String baseUrl = "http://[host]:[port]/[webapp]/";
+   * Client client = Client.create( new DefaultClientConfig() );
+   * client.addFilter( new HTTPBasicAuthFilter( "[user]", "[password]" ) );
+   * WebResource resource = client.resource( baseUrl + "plugin/data-access/api/datasource/analysis/ids" );
+   * 	//in JaxbList.java setter should be marked as {@literal @}XmlElement
+   * JaxbList<String> jList = resource.get( JaxbList.class );
+   * ArrayList<String> list = (ArrayList<String>) jList.getList();
+   * for ( String string : list )
+   * {
+   * 	//string usage
+   * }
+   * </code>
+   * </pre>
+   *
    * @return JaxbList<String> of analysis IDs
    */
   @GET
@@ -114,6 +144,36 @@ public class DatasourceResource {
 
   /**
    * Get the Metadata datasource IDs
+   *
+   * <p> Endpoint address is: <b> http://[host]:[port]/[webapp]/plugin/data-access/api/datasource/metadata/ids </b><br/>
+   * You should be logged in to the system in order to use the method.</p>
+   * Response content is json or xml based on request "accept" header("application/json" or "application/xml").<br/>
+   * Response example:
+   * <pre>
+   * {@code
+   * <List>
+   * <Item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">steel-wheels</Item>
+   * <Item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">ba-pom</Item>
+   * <Item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">PDI Operations Mart Sample Reports/metadata.xmi</Item>
+   * </List>   
+   * }
+   * </pre>
+   * Method usage(Jersey):
+   * <pre>
+   * <code> 
+   * final String baseUrl = "http://[host]:[port]/[webapp]/";
+   * Client client = Client.create( new DefaultClientConfig() );
+   * client.addFilter( new HTTPBasicAuthFilter( "[user]", "[password]" ) );
+   * WebResource resource = client.resource( baseUrl + "plugin/data-access/api/datasource/metadata/ids" );
+   * 	//in JaxbList.java setter should be marked as {@literal @}XmlElement
+   * JaxbList<String> jList = resource.get( JaxbList.class );
+   * ArrayList<String> list = (ArrayList<String>) jList.getList();
+   * for ( String string : list )
+   * {
+   * 	//string usage
+   * }
+   * </code>
+   * </pre>
    *
    * @return JaxbList<String> of metadata IDs
    */
@@ -168,7 +228,35 @@ public class DatasourceResource {
   /**
    * Returns a list of datasource IDs from datasource wizard
    *
-   * @return JaxbList<String> list of datasource IDs
+   * <p> Endpoint address is: <b> http://[host]:[port]/[webapp]/plugin/data-access/api/datasource/dsw/ids </b><br/>
+   * You should be logged in to the system in order to use the method.</p>
+   * Response content is json or xml based on request "accept" header("application/json" or "application/xml").<br/>
+   * Response example: 
+   * <pre>
+   * {@code
+   * <List>
+   * <Item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">PDI Operations Mart Sample Reports/metadata.xmi</Item>
+   * </List>   
+   * }
+   * </pre>
+   * Method usage(Jersey):
+   * <pre>
+   * <code> 
+   * final String baseUrl = "http://[host]:[port]/[webapp]/";
+   * Client client = Client.create( new DefaultClientConfig() );
+   * client.addFilter( new HTTPBasicAuthFilter( "[user]", "[password]" ) );
+   * WebResource resource = client.resource( baseUrl + "plugin/data-access/api/datasource/dsw/ids" );
+   *	//in JaxbList.java setter should be marked as {@literal @}XmlElement
+   * JaxbList<String> jList = resource.get( JaxbList.class );
+   * ArrayList<String> list = (ArrayList<String>) jList.getList();
+   * for ( String string : list )
+   * {
+   * 	//string usage
+   * }
+   * </code>
+   * </pre>
+   *
+   * @return JaxbList<String> List of datasource IDs
    */
   @GET
   @Path("/dsw/ids")
@@ -200,6 +288,26 @@ public class DatasourceResource {
    *
    * @param metadataId String Id of the metadata to retrieve
    *
+   * <p> Endpoint address is: <b> http://[host]:[port]/[webapp]/plugin/data-access/api/datasource/metadata/[datasourceId]/download </b><br/> 
+   * You should be logged in to the system and have RepositoryReadAction, RepositoryCreateAction, AdministerSecurityAction privileges in order to use the method.</p>
+   * Method usage(Jersey):
+   * <pre>
+   * <code>
+   * final String baseUrl = "http://[host]:[port]/[webapp]/";
+   * Client client = Client.create( new DefaultClientConfig() );
+   * client.addFilter( new HTTPBasicAuthFilter( "[user]", "[password]" ) );
+   * String datasourceId = "steel-wheels";
+   * WebResource resource = client.resource( baseUrl + "plugin/data-access/api/datasource/metadata/" + datasourceId + "/download" );
+   * try{
+   * 	File output = resource.get(File.class);
+   *  	//processing output
+   * }
+   * catch(UniformInterfaceException ex){
+   * 	//there is no datasource according to this path
+   * }
+   * </code>
+   * </pre>
+   *
    * @return Response containing the file data
    */
   @GET
@@ -218,6 +326,26 @@ public class DatasourceResource {
 
   /**
    * Download the analysis files for a given analysis id
+   *
+   * <p> Endpoint address is: <b> http://[host]:[port]/[webapp]/plugin/data-access/api/datasource/analysis/[datasourceId]/download </b><br/> 
+   * You should be logged in to the system and have RepositoryReadAction, RepositoryCreateAction, AdministerSecurityAction privileges in order to use the method.</p>
+   * Method usage(Jersey):
+   * <pre>
+   * <code>
+   * final String baseUrl = "[host]:[port]/[webapp]";
+   * Client client = Client.create( new DefaultClientConfig() );
+   * client.addFilter( new HTTPBasicAuthFilter( "[user]", "[password]" ) );
+   * String datasourceId = "SampleData";
+   * WebResource resource = client.resource( baseUrl + "plugin/data-access/api/datasource/analysis/" + datasourceId + "/download" );
+   * try{
+   * 	File output = resource.get(File.class);
+   *  	//processing output
+   * }
+   * catch(UniformInterfaceException ex){
+   * 	//there is no datasource according to this path
+   * }
+   * </code>
+   * </pre>
    *
    * @param analysisId String Id of the analysis data to retrieve
    *
@@ -239,6 +367,26 @@ public class DatasourceResource {
 
   /**
    * Download the data source wizard data for a given data source wizard ID
+   *
+   * <p> Endpoint address is: <b> http://[host]:[port]/[webapp]/plugin/data-access/api/datasource/dsw/[datasourceId]/download </b><br/> 
+   * You should be logged in to the system and have RepositoryReadAction, RepositoryCreateAction, AdministerSecurityAction privileges in order to use the method.</p>
+   * Method usage(Jersey):
+   * <pre>
+   * <code>
+   * final String baseUrl = "[host]:[port]/[webapp]";
+   * Client client = Client.create( new DefaultClientConfig() );
+   * client.addFilter( new HTTPBasicAuthFilter( "[user]", "[password]" ) );
+   * String datasourceId = "PDI%20Operations%20Mart%20Sample%20Reports/metadata.xmi";
+   * WebResource resource = client.resource( baseUrl + "plugin/data-access/api/datasource/dsw/" + datasourceId + "/download" );
+   * try{
+   * 	File output = resource.get(File.class);
+   *  	//processing output
+   * }
+   * catch(UniformInterfaceException ex){
+   * 	//there is no datasource according to this path
+   * }
+   * </code>
+   * </pre>
    *
    * @param dswId String Id of the data source wizard data to retrieve
    *
@@ -284,6 +432,21 @@ public class DatasourceResource {
   /**
    * Remove the metadata for a given metadata ID
    *
+   * <p> Endpoint address is: <b>http://[host]:[port]/[webapp]/plugin/data-access/api/datasource/metadata/[datasourceId]/remove </b><br/>
+   * You should be logged in to the system and have RepositoryReadAction, RepositoryCreateAction, AdministerSecurityAction privileges in order to use the method. <br/></p>
+   * Method usage(Jersey):
+   *
+   * <pre>
+   * <code>
+   * final String baseUrl = "http://[host]:[port]/[webapp]/";
+   * Client client = Client.create( new DefaultClientConfig() );
+   * client.addFilter( new HTTPBasicAuthFilter( "[user]", "[password]" ) );
+   * String datasourceId = "steel-wheels";
+   * WebResource resource = client.resource( baseUrl + "plugin/data-access/api/datasource/metadata/" + datasourceId + "/remove" );
+   * resource.post();   
+   * </code>
+   * </pre>
+   *
    * @param metadataId String ID of the metadata to remove
    *
    * @return Response ok if successful
@@ -301,6 +464,25 @@ public class DatasourceResource {
 
   /**
    * Remove the analysis data for a given analysis ID
+   * 
+   * <p> Endpoint address is: <b>http://[host]:[port]/[webapp]/plugin/data-access/api/datasource/analysis/[datasourceId]/remove </b><br/>
+   * You should be logged in to the system and have RepositoryReadAction, RepositoryCreateAction, AdministerSecurityAction privileges in order to use the method. <br/></p>
+   * Method usage(Jersey):
+   * <pre>
+   * <code>
+   * final String baseUrl = "http://[host]:[port]/[webapp]/";
+   * Client client = Client.create( new DefaultClientConfig() );
+   * client.addFilter( new HTTPBasicAuthFilter( "[user]", "[password]" ) );
+   * String datasourceId = "SteelWheels";
+   * WebResource resource = client.resource( baseUrl + "plugin/data-access/api/datasource/analysis/" + datasourceId + "/remove" );
+   * try{
+   * 	resource.post();
+   * }
+   * catch(UniformInterfaceException ex){
+   * 	//datasource was not deleted, handling exception
+   * }
+   * </code>
+   * </pre>
    *
    * @param analysisId String ID of the analysis data to remove
    *
@@ -319,6 +501,25 @@ public class DatasourceResource {
 
   /**
    * Remove the datasource wizard data for a given datasource wizard ID
+   *
+   * <p> Endpoint address is: <b>http://[host]:[port]/[webapp]/plugin/data-access/api/datasource/dsw/[datasourceId]/remove </b><br/>
+   * You should be logged in to the system and have RepositoryReadAction, RepositoryCreateAction, AdministerSecurityAction privileges in order to use the method. <br/></p>
+   * Method usage(Jersey):
+   * <pre>
+   * <code>
+   * final String baseUrl = "http://[host]:[port]/[webapp]/";
+   * Client client = Client.create( new DefaultClientConfig() );
+   * client.addFilter( new HTTPBasicAuthFilter( "[user]", "[password]" ) );
+   * String datasourceId = "simple.xmi";
+   * WebResource resource = client.resource( baseUrl + "plugin/data-access/api/datasource/dsw/" + datasourceId + "/remove" );
+   * try{
+   * 	resource.post();
+   * }
+   * catch(UniformInterfaceException ex){
+   * 	//datasource was not deleted, handling exception
+   * }
+   * </code>
+   * </pre>
    *
    * @param dswId String ID of the datasource wizard data to remove
    *
@@ -353,9 +554,34 @@ public class DatasourceResource {
   }
 
   /**
-   * Get the data source wizard info (parameters) for a specific data source wizard id
+   * Get the data source analysis info (parameters) for a specific data source analysis id
    *
-   * @param dswId String id for a data source wizard
+   * @param dswId String id for a analysis data source
+   *   
+   *<p> Endpoint address is: <b> http://[host]:[port]/[webapp]/plugin/data-access/api/datasource/[datasourceId]/getAnalysisDatasourceInfo </b><br/>
+   *Response example:
+   *<pre>
+   *{@code
+   *DataSource=SampleData;Provider=mondrian;EnableXmla="false"
+   *}
+   *</pre>
+   *Method usage(Jersey):
+   *<pre>
+   *<code>
+   *final String baseUrl = "http://[host]:[port]/[webapp]/";
+   *Client client = Client.create( new DefaultClientConfig() );
+   *client.addFilter( new HTTPBasicAuthFilter( "[user]", "[password]" ) );
+   *String datasourceId = "SampleData";
+   *WebResource resource = client.resource( baseUrl + "plugin/data-access/api/datasource/" + datasourceId + "/getAnalysisDatasourceInfo" );
+   *try{
+   *  	String output = resource.get(String.class);
+   *  	//processing output
+   *}
+   *catch(UniformInterfaceException ex){
+   * 	//handling exception
+   *}
+   *</code>
+   *</pre>
    *
    * @return Response containing the parameter list
    */
