@@ -76,8 +76,8 @@ public class CsvPhysicalStep extends AbstractWizardStep {
 
     stepRow = (XulRow) document.getElementById( STEP_ROWS_ID ).getFirstChild();
 
-    stepImage = (XulImage) stepRow.getFirstChild();
-    stepLabel = (XulLabel) stepRow.getChildNodes().get( 1 );
+    //stepImage = (XulImage) stepRow.getFirstChild();
+    //stepLabel = (XulLabel) stepRow.getChildNodes().get( 1 );
 
   }
 

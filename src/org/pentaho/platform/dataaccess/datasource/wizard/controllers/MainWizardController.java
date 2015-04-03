@@ -274,7 +274,7 @@ public class MainWizardController extends AbstractXulEventHandler implements IWi
       step1.activating();
       
       setActiveStep( 0 );
-      datasourceBinding.fireSourceChanged();
+      //datasourceBinding.fireSourceChanged();	//leads to not working NEXT button
       //setSelectedDatasource( dummyDatasource );
       setSelectedDatasource( csvDatasource );
       
@@ -290,10 +290,10 @@ public class MainWizardController extends AbstractXulEventHandler implements IWi
     } catch ( XulException e ) {
       MessageHandler.getInstance().showErrorDialog( "Error", e.getMessage() );
       e.printStackTrace();
-    } catch ( InvocationTargetException e ) {
-      MessageHandler.getInstance().showErrorDialog( "Error", e.getMessage() );
-      e.printStackTrace();
-    }
+    } //catch ( InvocationTargetException e ) {
+      //MessageHandler.getInstance().showErrorDialog( "Error", e.getMessage() );
+      //e.printStackTrace();
+    //}
 
 
   }
