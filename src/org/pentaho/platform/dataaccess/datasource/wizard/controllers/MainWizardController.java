@@ -34,6 +34,9 @@ import org.pentaho.platform.dataaccess.datasource.wizard.IWizardListener;
 import org.pentaho.platform.dataaccess.datasource.wizard.IWizardStep;
 import org.pentaho.platform.dataaccess.datasource.wizard.models.IWizardModel;
 import org.pentaho.platform.dataaccess.datasource.wizard.service.IXulAsyncDSWDatasourceService;
+import org.pentaho.platform.dataaccess.datasource.wizard.sources.csv.CsvDatasource;
+import org.pentaho.platform.dataaccess.datasource.wizard.sources.csv.CsvPhysicalStep;
+import org.pentaho.platform.dataaccess.datasource.wizard.sources.csv.StageDataStep;
 import org.pentaho.platform.dataaccess.datasource.wizard.sources.dummy.DummyDatasource;
 import org.pentaho.platform.dataaccess.datasource.wizard.sources.dummy.SelectDatasourceStep;
 import org.pentaho.ui.xul.XulException;
@@ -123,6 +126,8 @@ public class MainWizardController extends AbstractXulEventHandler implements IWi
   private XulButton finishButton;
 
   private DummyDatasource dummyDatasource = new DummyDatasource();
+  private CsvDatasource csvDatasource;
+  
   private SelectDatasourceStep selectDatasourceStep;
 
   public MainWizardController( final BindingFactory bf, IWizardModel wizardModel,
@@ -247,19 +252,32 @@ public class MainWizardController extends AbstractXulEventHandler implements IWi
     bf.createBinding( this, ACTIVE_STEP_PROPERTY_NAME, BACK_BTN_ELEMENT_ID, DISABLED_PROPERTY_NAME,
       new BackButtonBindingConverter() );
 
-    dummyDatasource = ( (DummyDatasource) wizardModel.getDatasources().iterator().next() );
-    activeDatasource = dummyDatasource;
-    selectDatasourceStep = dummyDatasource.getSelectDatasourceStep();
+    //dummyDatasource = ( (DummyDatasource) wizardModel.getDatasources().iterator().next() );
+    csvDatasource = ( (CsvDatasource) wizardModel.getDatasources().iterator().next() );
+    
+    //activeDatasource = dummyDatasource;
+    activeDatasource = csvDatasource;
+    
+    //selectDatasourceStep = dummyDatasource.getSelectDatasourceStep();
+    CsvPhysicalStep step1 = (CsvPhysicalStep) csvDatasource.getSteps().get(0);
+    StageDataStep step2 = (StageDataStep) csvDatasource.getSteps().get(1);
 
     try {
       for ( IWizardDatasource datasource : wizardModel.getDatasources() ) {
         datasource.init( getXulDomContainer(), wizardModel );
       }
-      steps.add( selectDatasourceStep );
-      selectDatasourceStep.activating();
+      //steps.add( selectDatasourceStep );
+      steps.add( step1 );
+      steps.add( step2 );
+      
+      //selectDatasourceStep.activating();
+      step1.activating();
+      
       setActiveStep( 0 );
       datasourceBinding.fireSourceChanged();
-      setSelectedDatasource( dummyDatasource );
+      //setSelectedDatasource( dummyDatasource );
+      setSelectedDatasource( csvDatasource );
+      
       datasourceService.getDatasourceIllegalCharacters( new XulServiceCallback<String>() {
         @Override
         public void success( String retVal ) {

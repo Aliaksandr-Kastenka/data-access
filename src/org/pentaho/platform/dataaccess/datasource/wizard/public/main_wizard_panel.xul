@@ -39,83 +39,15 @@
       </vbox>
       <deck id="content_deck" height="600" width="750">
         <!-- Wizard "Source" Step -->
-        <vbox id="sourcestep" height="600" flex="1" spacing="3" padding="0">
-          <vbox id="datasourceInfoBox" spacing="0" padding="0">
-            <label value="${datasourceDialog.DatasourceName}" tooltiptext="${datasourceDialog.DatasourceNameToolTip}"/>
-            <textbox id="datasourceName" width="200" multiline="false"/>
-            <label value="${physicalDatasourceDialog.SOURCE}" tooltiptext="Select the source type"/>
-            <menulist id="datatypeMenuList" editable="false" width="204" pen:binding="name">
-              <menupopup>
-              </menupopup>
-            </menulist>
-          </vbox>
-          <deck id="datasourceDialogDeck" height="500">
-            <hbox id="NoopDatasource" flex="1">
-              <!-- Empty panel for select Database type menu item. -->
-            </hbox>
-
-
-            <hbox flex="1" height="100%" id="queryDeckPanel">
-              <!--  ###############################################################################  -->
-              <!--     SQL datasource step 1 -->
-              <!--  ###############################################################################  -->
-              <vbox height="500">
-                <vbox id="connectionsLbl">
-                  <label value="${multitable.CONNECTIONS_LBL}"/>
-                </vbox>
-                <hbox>
-                  <label value="${datasourceDialog.Connection}" tooltiptext="${datasourceDialog.ConnectionToolTip}"/>
-                  <spacer flex="1"/>
-
-                  <button id="editConnection" image="images/spacer.gif" pen:disabledimage="images/spacer.gif"
-                          tooltiptext="${datasourceDialog.editConnectionImageToolTip}"
-                          onclick="wizardConnectionController.showEditConnectionDialog()" disabled="true"
-                          pen:classname="pentaho-updatebutton"/>
-
-                  <button id="addConnection" image="images/spacer.gif"
-                          tooltiptext="${datasourceDialog.addConnectionImageToolTip}"
-                          pen:disabledimage="images/spacer.gif"
-                          onclick="wizardConnectionController.showAddConnectionDialog()" disabled="false"
-                          pen:classname="pentaho-addbutton"/>
-
-                  <button id="removeConnection" image="images/spacer.gif" pen:disabledimage="images/spacer.gif"
-                          tooltiptext="${datasourceDialog.removeConnectionImageToolTip}"
-                          onclick="wizardConnectionController.showRemoveConnectionDialog()" disabled="true"
-                          pen:classname="pentaho-deletebutton"/>
-                </hbox>
-                <listbox id="connectionList" pen:binding="modelName" disabled="true" height="475" width="280"/>
-                <vbox id="metadata" flex="1" height="80">
-                  <label value="${multitable.REPORTING_METADATA_GROUP_LABEL}" tooltiptext=""/>
-                  <radiogroup id="metadataRadioGrup" padding="0">
-                    <radio id="reporting" checked="true" value="${multitable.REPORTING_METADATA}"
-                           label="${multitable.REPORTING_METADATA_LABEL}"/>
-                    <radio id="reporting_analysis" value="${multitable.REPORTING_METADATA_ANALYSIS}"
-                           label="${multitable.REPORTING_METADATA_ANALYSIS_LABEL}"/>
-                  </radiogroup>
-                </vbox>
-              </vbox>
-              <spacer width="10" height="500"/>
-              <vbox id="queryBox" height="500" flex="1">
-                <hbox>
-                  <label value="${datasourceDialog.Query}" tooltiptext="${datasourceDialog.QueryToolTip}" flex="1"/>
-                </hbox>
-                <textbox height="432" id="query" multiline="true" disabled="false"/>
-                <hbox>
-                  <spacer flex="1"/>
-                  <label value="Limit:"/>
-                  <textbox id="previewLimit" value="10" width="22"/>
-                  <button id="preview" label="${datasourceDialog.PREVIEW}"
-                          tooltiptext="${datasourceDialog.previewToolTip}"
-                          onclick="relationalDatasourceController.displayPreview()" disabled="true"/>
-                </hbox>
-              </vbox>
-            </hbox>
-
-            <vbox id="csvDeckPanel" height="505" spacing="0" padding="0">
+        <vbox id="csvDeckPanel" height="505" spacing="0" padding="0">
               <!--  ###############################################################################  -->
               <!--     CSV datasource step 1 -->
               <!--  ###############################################################################  -->
               <hbox spacing="0">
+				<label value="${datasourceDialog.DatasourceName}" tooltiptext="${datasourceDialog.DatasourceNameToolTip}"/>
+				<textbox id="datasourceName" width="200" multiline="false"/>
+			  </hbox>
+			  <hbox spacing="0">
                 <label id="fileLabel" value="${physicalDatasourceDialog.FILE}"/>
                 <spacer width="403"/>
                 <label value="${physicalDatasourceDialog.ENCODING}"
@@ -200,6 +132,80 @@
                 <label multiline="true" id="csvTextPreview" height="260" width="730" pre="true"/>
               </groupbox>
             </vbox>
+		
+		<vbox id="sourcestep" height="600" flex="1" spacing="3" padding="0">
+          <vbox id="datasourceInfoBox" spacing="0" padding="0">
+            <label value="${datasourceDialog.DatasourceName}" tooltiptext="${datasourceDialog.DatasourceNameToolTip}"/>
+            <!-- <textbox id="datasourceName" width="200" multiline="false"/> -->
+            <label value="${physicalDatasourceDialog.SOURCE}" tooltiptext="Select the source type"/>
+            <menulist id="datatypeMenuList" editable="false" width="204" pen:binding="name">
+              <menupopup>
+              </menupopup>
+            </menulist>
+          </vbox>
+          <deck id="datasourceDialogDeck" height="500">
+            <hbox id="NoopDatasource" flex="1">
+              <!-- Empty panel for select Database type menu item. -->
+            </hbox>
+
+
+            <hbox flex="1" height="100%" id="queryDeckPanel">
+              <!--  ###############################################################################  -->
+              <!--     SQL datasource step 1 -->
+              <!--  ###############################################################################  -->
+              <vbox height="500">
+                <vbox id="connectionsLbl">
+                  <label value="${multitable.CONNECTIONS_LBL}"/>
+                </vbox>
+                <hbox>
+                  <label value="${datasourceDialog.Connection}" tooltiptext="${datasourceDialog.ConnectionToolTip}"/>
+                  <spacer flex="1"/>
+
+                  <button id="editConnection" image="images/spacer.gif" pen:disabledimage="images/spacer.gif"
+                          tooltiptext="${datasourceDialog.editConnectionImageToolTip}"
+                          onclick="wizardConnectionController.showEditConnectionDialog()" disabled="true"
+                          pen:classname="pentaho-updatebutton"/>
+
+                  <button id="addConnection" image="images/spacer.gif"
+                          tooltiptext="${datasourceDialog.addConnectionImageToolTip}"
+                          pen:disabledimage="images/spacer.gif"
+                          onclick="wizardConnectionController.showAddConnectionDialog()" disabled="false"
+                          pen:classname="pentaho-addbutton"/>
+
+                  <button id="removeConnection" image="images/spacer.gif" pen:disabledimage="images/spacer.gif"
+                          tooltiptext="${datasourceDialog.removeConnectionImageToolTip}"
+                          onclick="wizardConnectionController.showRemoveConnectionDialog()" disabled="true"
+                          pen:classname="pentaho-deletebutton"/>
+                </hbox>
+                <listbox id="connectionList" pen:binding="modelName" disabled="true" height="475" width="280"/>
+                <vbox id="metadata" flex="1" height="80">
+                  <label value="${multitable.REPORTING_METADATA_GROUP_LABEL}" tooltiptext=""/>
+                  <radiogroup id="metadataRadioGrup" padding="0">
+                    <radio id="reporting" checked="true" value="${multitable.REPORTING_METADATA}"
+                           label="${multitable.REPORTING_METADATA_LABEL}"/>
+                    <radio id="reporting_analysis" value="${multitable.REPORTING_METADATA_ANALYSIS}"
+                           label="${multitable.REPORTING_METADATA_ANALYSIS_LABEL}"/>
+                  </radiogroup>
+                </vbox>
+              </vbox>
+              <spacer width="10" height="500"/>
+              <vbox id="queryBox" height="500" flex="1">
+                <hbox>
+                  <label value="${datasourceDialog.Query}" tooltiptext="${datasourceDialog.QueryToolTip}" flex="1"/>
+                </hbox>
+                <textbox height="432" id="query" multiline="true" disabled="false"/>
+                <hbox>
+                  <spacer flex="1"/>
+                  <label value="Limit:"/>
+                  <textbox id="previewLimit" value="10" width="22"/>
+                  <button id="preview" label="${datasourceDialog.PREVIEW}"
+                          tooltiptext="${datasourceDialog.previewToolTip}"
+                          onclick="relationalDatasourceController.displayPreview()" disabled="true"/>
+                </hbox>
+              </vbox>
+            </hbox>
+
+            
           </deck>
         </vbox>
 

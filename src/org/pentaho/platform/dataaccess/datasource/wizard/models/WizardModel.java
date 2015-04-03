@@ -40,7 +40,7 @@ public class WizardModel extends XulEventSourceAdapter implements IWizardModel {
   private boolean reportingOnlyValid = true;
 
   public WizardModel() {
-    addDatasource( new DummyDatasource() );
+    //addDatasource( new DummyDatasource() );
   }
 
   @Override
