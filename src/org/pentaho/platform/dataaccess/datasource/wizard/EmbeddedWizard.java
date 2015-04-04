@@ -230,7 +230,7 @@ public class EmbeddedWizard extends AbstractXulDialogController<Domain>
    * Specified by <code>DialogController</code>.
    */
   public void showDialog() {
-Window.alert("EmbeddedWizard:showDialog():-BEGIN");
+//Window.alert("EmbeddedWizard:showDialog():-BEGIN");
     this.modelerDialogListener = null;
     if ( connectionController != null ) {
       connectionController.reloadConnections();
@@ -242,11 +242,11 @@ Window.alert("EmbeddedWizard:showDialog():-BEGIN");
     }
     wizardModel.setEditing( false );
     wizardController.setActiveStep( 0 );
-    Window.alert("EmbeddedWizard:showDialog():-1");
+    //Window.alert("EmbeddedWizard:showDialog():-1");
     wizardModel.reset();
-    Window.alert("EmbeddedWizard:showDialog():-2");
+    //Window.alert("EmbeddedWizard:showDialog():-2");
     wizardModel.setReportingOnlyValid( this.reportingOnlyValid );
-    Window.alert("EmbeddedWizard:showDialog():-3");
+    //Window.alert("EmbeddedWizard:showDialog():-3");
 
     /* BISERVER-5153: Work around where XulGwtButton is getting its disabled state and style
      * confused.  The only way to get the train on the track is to flip-flop it.
@@ -256,14 +256,14 @@ Window.alert("EmbeddedWizard:showDialog():-BEGIN");
    // nextButton.setDisabled( false );
     //nextButton.setDisabled( true );
     /* end of work around */
-    Window.alert("EmbeddedWizard:showDialog():-4");
+    //Window.alert("EmbeddedWizard:showDialog():-4");
     dialog.show();
-    Window.alert("EmbeddedWizard:showDialog():-5");
+    //Window.alert("EmbeddedWizard:showDialog():-5");
     // BISERVER-6473
     XulTextbox datasourceName =
       (XulTextbox) mainWizardContainer.getDocumentRoot().getElementById( "datasourceName" ); //$NON-NLS-1$
     datasourceName.setFocus();
-Window.alert("EmbeddedWizard:showDialog():-END");
+//Window.alert("EmbeddedWizard:showDialog():-END");
   }
 
   public void showEditDialog( final Domain domain, DialogListener<Domain> listener ) {

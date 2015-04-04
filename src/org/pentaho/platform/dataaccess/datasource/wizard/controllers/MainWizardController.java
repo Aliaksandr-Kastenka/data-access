@@ -142,12 +142,12 @@ public class MainWizardController extends AbstractXulEventHandler implements IWi
   }
 
   public IWizardStep getStep( final int step ) {
-IWizardStep stp = steps.get( step );
-Window.alert("MainWizardController:getStep():stp: " + stp);
-if(stp != null){
-	Window.alert("MainWizardController:getStep():steps.get( step ): " + stp.getStepName());
-	Window.alert("MainWizardController:getStep():steps.get( step ): " + stp.getUIComponent());
-}
+//IWizardStep stp = steps.get( step );
+//Window.alert("MainWizardController:getStep():stp: " + stp);
+//if(stp != null){
+//	Window.alert("MainWizardController:getStep():steps.get( step ): " + stp.getStepName());
+//	Window.alert("MainWizardController:getStep():steps.get( step ): " + stp.getUIComponent());
+//}
     return steps.get( step );
   }
 
@@ -156,17 +156,17 @@ if(stp != null){
   }
 
   public void setActiveStep( final int step ) {
-Window.alert("MainWizardController:setActiveStep():-BEGIN");
-Window.alert("MainWizardController:setActiveStep():step: " + step);
+//Window.alert("MainWizardController:setActiveStep():-BEGIN");
+//Window.alert("MainWizardController:setActiveStep():step: " + step);
     try {
       if ( this.steps == null || steps.isEmpty() ) {
         return;
       }
       final int oldActiveStep = this.activeStep;
-Window.alert("MainWizardController:setActiveStep():oldActiveStep: " + oldActiveStep);
+//Window.alert("MainWizardController:setActiveStep():oldActiveStep: " + oldActiveStep);
       if ( oldActiveStep >= 0 ) {
         final IWizardStep deactivatingWizardStep = steps.get( oldActiveStep );
-Window.alert("MainWizardController:setActiveStep():deactivatingWizardStep.getStepName(): " + deactivatingWizardStep.getStepName());        
+//Window.alert("MainWizardController:setActiveStep():deactivatingWizardStep.getStepName(): " + deactivatingWizardStep.getStepName());        
         if ( step > oldActiveStep ) {
           if ( !deactivatingWizardStep.stepDeactivatingForward() ) {
             return;
@@ -180,31 +180,31 @@ Window.alert("MainWizardController:setActiveStep():deactivatingWizardStep.getSte
 
       this.activeStep = step;
       final IWizardStep activatingWizardStep = steps.get( activeStep );
-Window.alert("MainWizardController:setActiveStep():activatingWizardStep.getStepName(): " + activatingWizardStep.getStepName());
+//Window.alert("MainWizardController:setActiveStep():activatingWizardStep.getStepName(): " + activatingWizardStep.getStepName());
       updateBindings();
 
       // update the controller panel
       final XulDeck deck = (XulDeck) document.getElementById( CONTENT_DECK_ELEMENT_ID );
       int index = deck.getChildNodes().indexOf( activatingWizardStep.getUIComponent() );
-Window.alert("MainWizardController:setActiveStep():index: " + index);
+//Window.alert("MainWizardController:setActiveStep():index: " + index);
       deck.setSelectedIndex( index );
       selectDataSourceMenuList( activatingWizardStep, index );
       activatingWizardStep.refresh();
 
       if ( activeStep > oldActiveStep ) {
-Window.alert("MainWizardController:setActiveStep():IF1");
+//Window.alert("MainWizardController:setActiveStep():IF1");
         activatingWizardStep.stepActivatingForward();
       } else {
-Window.alert("MainWizardController:setActiveStep():IF2");
+//Window.alert("MainWizardController:setActiveStep():IF2");
         activatingWizardStep.stepActivatingReverse();
       }
 
       this.firePropertyChange( ACTIVE_STEP_PROPERTY_NAME, oldActiveStep, this.activeStep );
     } catch ( Exception e ) {
-Window.alert("MainWizardController:setActiveStep():e: " + e.getMessage());
+//Window.alert("MainWizardController:setActiveStep():e: " + e.getMessage());
       e.printStackTrace();
     }
-Window.alert("MainWizardController:setActiveStep():-END");
+//Window.alert("MainWizardController:setActiveStep():-END");
   }
 
   private void selectDataSourceMenuList( IWizardStep activatingWizardStep, int index ) {
@@ -230,7 +230,7 @@ Window.alert("MainWizardController:setActiveStep():-END");
   }
 
   public int getActiveStep() {
-Window.alert("MainWizardController:getActiveStep():activeStep: " + activeStep);
+//Window.alert("MainWizardController:getActiveStep():activeStep: " + activeStep);
     return activeStep;
   }
 
@@ -354,49 +354,49 @@ Window.alert("MainWizardController:getActiveStep():activeStep: " + activeStep);
   }
 
   protected void updateBindings() {
-Window.alert("MainWizardController:updateBindings():-BEGIN");
+//Window.alert("MainWizardController:updateBindings():-BEGIN");
     // Destroy any old bindings
     if ( nextButtonBinding != null ) {
-Window.alert("MainWizardController:updateBindings():-IF1");
+//Window.alert("MainWizardController:updateBindings():-IF1");
       //nextButtonBinding.destroyBindings();
     }
     if ( finishedButtonBinding != null ) {
-Window.alert("MainWizardController:updateBindings():-IF2");    	
+//Window.alert("MainWizardController:updateBindings():-IF2");    	
       //finishedButtonBinding.destroyBindings();
     }
 
     // Create new binding to the current wizard panel
-if(bf != null ) {
-Window.alert("bf!=null");       	
-}
+//if(bf != null ) {
+//Window.alert("bf!=null");       	
+//}
 try{
     bf.setBindingType( Binding.Type.ONE_WAY );
     nextButtonBinding =
       bf.createBinding( getStep( getActiveStep() ), VALID_PROPERTY_NAME, NEXT_BTN_ELEMENT_ID, DISABLED_PROPERTY_NAME,
         notDisabledBindingConvertor );
 }catch(Exception e) {
-Window.alert("e0: " + e.getMessage());
+//Window.alert("e0: " + e.getMessage());
 }
-Window.alert("MainWizardController:updateBindings():1");
+//Window.alert("MainWizardController:updateBindings():1");
 try {
     finishedButtonBinding =
       bf.createBinding( activeDatasource, FINISHABLE_PROPERTY_NAME, FINISH_BTN_ELEMENT_ID, DISABLED_PROPERTY_NAME,
         notDisabledBindingConvertor );
 }catch(Exception e) {
-Window.alert("e00: " + e.getMessage());
+//Window.alert("e00: " + e.getMessage());
 }
-    Window.alert("MainWizardController:updateBindings():2");  
+    //Window.alert("MainWizardController:updateBindings():2");  
 
     try {
-    	Window.alert("MainWizardController:updateBindings():3");  
+    	//Window.alert("MainWizardController:updateBindings():3");  
       nextButtonBinding.fireSourceChanged();
-      Window.alert("MainWizardController:updateBindings():4");  
+      //Window.alert("MainWizardController:updateBindings():4");  
       finishedButtonBinding.fireSourceChanged();
     } catch ( Exception e ) {
-Window.alert("MainWizardController:updateBindings():e: " + e.getMessage() );    	    	
+//Window.alert("MainWizardController:updateBindings():e: " + e.getMessage() );    	    	
       //TODO add some exception handling here.
     }
-Window.alert("MainWizardController:updateBindings():-END");
+//Window.alert("MainWizardController:updateBindings():-END");
   }
 
   @Bindable
