@@ -27,6 +27,7 @@ import org.pentaho.ui.xul.containers.XulVbox;
 import org.pentaho.ui.xul.gwt.tags.GwtRadioGroup;
 import org.pentaho.ui.xul.impl.AbstractXulEventHandler;
 import org.pentaho.ui.xul.stereotype.Bindable;
+import com.google.gwt.user.client.Window;
 
 /**
  * User: nbaker Date: 3/22/11
@@ -52,6 +53,7 @@ public class SummaryDialogController extends AbstractXulEventHandler {
   }
 
   public void init() {
+//Window.alert("SummaryDialogController:init()-BEGIN");
     wizardDialog = (XulDialog) document.getElementById( "main_wizard_window" );
     modelerDecision = (GwtRadioGroup) document.getElementById( "modelerDecision" );
     errorLogExpander = (XulExpandPanel) document.getElementById( "errorLogExpander" );
@@ -60,14 +62,18 @@ public class SummaryDialogController extends AbstractXulEventHandler {
     summaryDialog = (XulDialog) document.getElementById( "summaryDialog" );
     summaryDialogRowsLoaded = (XulLabel) document.getElementById( "summaryDialogRowsLoaded" );
     summaryDialogDetails = (XulLabel) document.getElementById( "summaryDialogDetails" );
+//Window.alert("SummaryDialogController:init()-END");
   }
 
   public void showSummaryDialog( IDatasourceSummary stats, XulServiceCallback<IDatasourceSummary> callback ) {
+//Window.alert("SummaryDialogController:showSummaryDialog()1-BEGIN");
     showSummaryDialog( stats, true, callback );
+//Window.alert("SummaryDialogController:showSummaryDialog()1-END");
   }
 
   public void showSummaryDialog( IDatasourceSummary stats, boolean showModelerDecision,
                                  XulServiceCallback<IDatasourceSummary> callback ) {
+//Window.alert("SummaryDialogController:showSummaryDialog()2-BEGIN");  
     summary = stats;
     this.callback = callback;
 
@@ -109,10 +115,12 @@ public class SummaryDialogController extends AbstractXulEventHandler {
     showModelerCheckboxHider.setVisible( showModelerDecision );
     MessageHandler.getInstance().closeWaitingDialog();
     summaryDialog.show();
+//Window.alert("SummaryDialogController:showSummaryDialog()2-END");
   }
 
   @Bindable
   public void closeSummaryDialog() {
+//Window.alert("SummaryDialogController:closeSummaryDialog()-BEGIN");
     summaryDialog.hide();
     boolean editModeler = modelerDecision.getValue() != null && modelerDecision.getValue().equals( "EDIT" );
     if ( editModeler ) {
@@ -125,6 +133,7 @@ public class SummaryDialogController extends AbstractXulEventHandler {
 
     errorLogExpander.setExpanded( false );
     this.callback.success( summary );
+//Window.alert("SummaryDialogController:closeSummaryDialog()-END");
   }
 
   public void setBindingFactory( BindingFactory bindingFactory ) {

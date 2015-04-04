@@ -317,7 +317,9 @@ public class MainWizardController extends AbstractXulEventHandler implements IWi
   }
 
   public void resetSelectedDatasource() {
+//Window.alert("MainWizardController:resetSelectedDatasource()-BEGIN");
     datatypeMenuList.setSelectedIndex( 0 );
+//Window.alert("MainWizardController:resetSelectedDatasource()-END");
   }
 
   @Bindable

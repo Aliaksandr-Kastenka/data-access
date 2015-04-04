@@ -167,13 +167,16 @@ public class EmbeddedWizard extends AbstractXulDialogController<Domain>
 
   @Override
   public void onFinish( final IDatasourceSummary summary ) {
-    wizardController.resetSelectedDatasource();
+//Window.alert("EmbeddedWizard:onFinish()-BEGIN");
+    //wizardController.resetSelectedDatasource();
+//Window.alert("EmbeddedWizard:onFinish()-1");    
     this.summary = summary;
     if ( wizardModel.isEditing() && summary.getErrorCount() == 0 ) {
       // biserver-6210 - manage modeler dialog listener separate from the wizard's listener
       handleModelerDialog();
       return;
     }
+//Window.alert("EmbeddedWizard:onFinish()-2");
     final boolean showModelerDecision = !wizardModel.isEditing();
     summaryDialogController
       .showSummaryDialog( summary, showModelerDecision, new XulServiceCallback<IDatasourceSummary>() {
@@ -198,6 +201,7 @@ public class EmbeddedWizard extends AbstractXulDialogController<Domain>
           MessageHandler.getInstance().closeWaitingDialog();
         }
       } );
+//Window.alert("EmbeddedWizard:onFinish()-END");
   }
 
   private void handleModelerDialog() {
