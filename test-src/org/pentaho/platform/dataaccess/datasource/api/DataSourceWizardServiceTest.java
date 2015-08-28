@@ -35,6 +35,7 @@ import org.pentaho.platform.api.repository2.unified.RepositoryFile;
 import org.pentaho.platform.api.repository2.unified.RepositoryFileAcl;
 import org.pentaho.platform.api.repository2.unified.RepositoryFileSid;
 import org.pentaho.platform.dataaccess.datasource.beans.LogicalModelSummary;
+import org.pentaho.platform.dataaccess.datasource.wizard.service.ConnectionServiceException;
 import org.pentaho.platform.dataaccess.datasource.wizard.service.DatasourceServiceException;
 import org.pentaho.platform.dataaccess.datasource.wizard.service.gwt.IDSWDatasourceService;
 import org.pentaho.platform.plugin.action.mondrian.catalog.IAclAwareMondrianCatalogService;
@@ -58,7 +59,6 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 public class DataSourceWizardServiceTest {
 
@@ -142,7 +142,7 @@ public class DataSourceWizardServiceTest {
     String mockObject = "not null";
     String dswId = "dswId";
 
-    doReturn( true ).when( dataSourceWizardService ).canAdministerCheck();
+    doNothing().when( dataSourceWizardService ).ensureDataAccessPermissionCheck();
     doReturn( dswId ).when( dataSourceWizardService ).parseMondrianSchemaNameWrapper( dswId );
     doReturn( mockDomain ).when( dataSourceWizardService.metadataDomainRepository ).getDomain( dswId );
     doReturn( mockModelerWorkspace ).when( dataSourceWizardService ).createModelerWorkspace();
@@ -168,7 +168,7 @@ public class DataSourceWizardServiceTest {
     String mockObject = "not null";
     String dswId = "dswId";
 
-    doReturn( true ).when( dataSourceWizardService ).canAdministerCheck();
+    doNothing().when( dataSourceWizardService ).ensureDataAccessPermissionCheck();
     doReturn( dswId ).when( dataSourceWizardService ).parseMondrianSchemaNameWrapper( dswId );
     doReturn( mockDomain ).when( dataSourceWizardService.metadataDomainRepository ).getDomain( dswId );
     doReturn( mockModelerWorkspace ).when( dataSourceWizardService ).createModelerWorkspace();
@@ -197,7 +197,8 @@ public class DataSourceWizardServiceTest {
     String dswId = "dswId";
 
     //Test 1
-    doReturn( false ).when( dataSourceWizardService ).canAdministerCheck();
+    ConnectionServiceException cse = new ConnectionServiceException();
+    doThrow( cse ).when( dataSourceWizardService ).ensureDataAccessPermissionCheck();
 
     try {
       dataSourceWizardService.removeDSW( "dswId" );
@@ -208,7 +209,7 @@ public class DataSourceWizardServiceTest {
 
     //Test 2
     DatasourceServiceException mockDatasourceServiceException = mock( DatasourceServiceException.class );
-    doReturn( true ).when( dataSourceWizardService ).canAdministerCheck();
+    doNothing().when( dataSourceWizardService ).ensureDataAccessPermissionCheck();
     doReturn( dswId ).when( dataSourceWizardService ).parseMondrianSchemaNameWrapper( dswId );
     doReturn( mockDomain ).when( dataSourceWizardService.metadataDomainRepository ).getDomain( dswId );
     doReturn( mockModelerWorkspace ).when( dataSourceWizardService ).createModelerWorkspace();

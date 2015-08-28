@@ -41,6 +41,7 @@ import org.pentaho.platform.api.repository2.unified.IUnifiedRepository;
 import org.pentaho.platform.api.repository2.unified.RepositoryFile;
 import org.pentaho.platform.api.repository2.unified.RepositoryFileAcl;
 import org.pentaho.platform.api.repository2.unified.RepositoryFileSid;
+import org.pentaho.platform.dataaccess.datasource.wizard.service.ConnectionServiceException;
 import org.pentaho.platform.plugin.action.mondrian.catalog.IAclAwareMondrianCatalogService;
 import org.pentaho.platform.plugin.action.mondrian.catalog.IMondrianCatalogService;
 import org.pentaho.platform.plugin.action.mondrian.catalog.MondrianCatalog;
@@ -118,7 +119,7 @@ public class AnalysisServiceTest {
   public void testRemoveAnalysis() throws Exception {
     IPentahoSession mockIPentahoSession = mock( IPentahoSession.class );
 
-    doReturn( true ).when( analysisService ).canAdministerCheck();
+    doNothing().when( analysisService ).ensureDataAccessPermissionCheck();
     doReturn( "param" ).when( analysisService ).fixEncodedSlashParam( "analysisId" );
     doReturn( mockIPentahoSession ).when( analysisService ).getSession();
     doNothing().when( analysisService.mondrianCatalogService ).removeCatalog( "param", mockIPentahoSession );
@@ -130,7 +131,8 @@ public class AnalysisServiceTest {
 
   @Test
   public void testRemoveAnalysisError() throws Exception {
-    doReturn( false ).when( analysisService ).canAdministerCheck();
+    ConnectionServiceException cse = new ConnectionServiceException();
+    doThrow(cse).when( analysisService ).ensureDataAccessPermissionCheck();
     try {
       analysisService.removeAnalysis( "analysisId" );
       fail();
