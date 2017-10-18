@@ -664,7 +664,9 @@ public abstract class StagingTransformGenerator extends PentahoBase {
             db.setCommit( 0 );
           }
         }
-        catch( java.sql.SQLException e ) { }
+        catch( java.sql.SQLException e ) {
+          // do nothing
+        }
         return db.checkTableExists( tableName );
       } catch ( KettleDatabaseException dbe ) {
         error( "Error executing DDL", dbe );
